@@ -6,6 +6,7 @@ import java.util.Stack;
 
 public class Maze {
 	private ArrayList<ArrayList<Cell>> maze;
+	private ArrayList<ArrayList<Index>> dual;
 	Cell origin;
 	Cell end;
 	private int x,y;//width and height
@@ -52,6 +53,8 @@ public class Maze {
 			System.out.println();
 		}
 	}
+	
+	
 	
 	public void generateMaze() {
 		//remove all neighbours, leave only possible paths
