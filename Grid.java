@@ -30,19 +30,15 @@ public class Grid extends JPanel {
 		System.out.println("paint stuff");
 		g.drawRect(10,10,horLen*(rows),verLen*(cols));
 		
-		for (Edge e : edges) {
-			g.drawLine(10+e.i.row*horLen, 10+e.i.col*verLen, 10+e.j.row*horLen, 10+e.j.col*verLen);
-		}
+		for (Edge e : edges) g.drawLine(10+e.i.row*horLen, 10+e.i.col*verLen, 10+e.j.row*horLen, 10+e.j.col*verLen);
 		
 		g.setColor(Color.GREEN);
 		if (start!=null) g.fillRect(12+end.x*horLen, 12+end.y*verLen,horLen-3,verLen-3);
 		if (end != null) g.fillRect(12+start.x*horLen, 12+start.y*verLen,horLen-3,verLen-3);
+		
 		g.setColor(Color.LIGHT_GRAY);
-		for (Cell c : path) {
-			g.fillRect(12+c.x*horLen, 12+c.y*verLen,horLen-3,verLen-3);
-		}
-		
-		
+		for (Cell c : path) g.fillRect(12+c.x*horLen, 12+c.y*verLen,horLen-3,verLen-3);
+
 	}
 	
 	public void addStep(Cell c) {
@@ -114,66 +110,4 @@ public class Grid extends JPanel {
 		end = e;
 		repaint();
 	}
-	public void reEdge(Cell a, Cell b) {
-		ArrayList<Edge> toRemove = new ArrayList<Edge>();
-		//a-->b
-		boolean sides = false;
-		Cell top=null,bottom=null;
-		Cell left=null,right=null;
-		if (a.y == b.y) {
-			//same col - horizontal wall
-			if (a.x > b.x) {
-				bottom = a;
-				top = b;
-			} else {
-				bottom = b;
-				top = a;
-			}
-			
-		} else {
-			//same row - vertical wall
-			sides = true;
-			if (a.x > b.x) {
-				right = a;
-				left = b;
-			} else {
-				right = b;
-				left = a;
-			}
-		}
-		
-		if (sides) {
-			//top index = (right.x,right.y)
-			//bottom index = (left.x + 1, right.y)
-			
-			//top index = (right.x,right.y)
-			//bottom index = (left.y+1, left.x +1)
-			for (Edge e : edges) {
-				if ((e.i.row == right.x && e.i.col == right.y &&   //top index
-					e.j.row == left.x && e.j.col == left.y) || //bottom index
-					(e.i.row == left.x && e.i.col == left.y && //or edge other way round
-					e.j.row == right.x && e.j.col == right.y)) {
-						
-						toRemove.add(e);
-				}
-			}
-		} else {
-			//left index = bottom.x, bottom.y
-			//right index = bottom.y, top.x + 1
-			for (Edge e : edges) {
-				if ((e.i.row == bottom.y+1 && e.i.col == bottom.x+1 &&
-					e.j.row == bottom.y && e.j.col == bottom.x) ||
-					(e.i.row == bottom.y && e.i.col == bottom.x &&
-					e.j.row == bottom.y+1 && e.j.col == bottom.x+1)) {
-						
-						toRemove.add(e);
-				}
-			}
-		}
-		edges.removeAll(toRemove);
-		
-		//try {Thread.sleep(100);} catch (InterruptedException ex) {}
-		repaint();
-	}
-	
 }
