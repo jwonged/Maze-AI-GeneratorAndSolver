@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 public class Grid extends JPanel {
-	public static ArrayList<Edge> edges;
+	private static ArrayList<Edge> edges;
 	private static ArrayList<Cell> path;
 	private Cell start, end;
 	private int rows, cols;
@@ -26,19 +26,23 @@ public class Grid extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setColor(Color.BLACK);
-		System.out.println("paint stuff");
-		g.drawRect(10,10,horLen*(rows),verLen*(cols));
 		
+		//border and cell walls
+		g.setColor(Color.BLACK);
+		g.drawRect(10,10,horLen*(rows),verLen*(cols));
 		for (Edge e : edges) g.drawLine(10+e.i.row*horLen, 10+e.i.col*verLen, 10+e.j.row*horLen, 10+e.j.col*verLen);
 		
+		//origin and end of maze
 		g.setColor(Color.GREEN);
 		if (start!=null) g.fillRect(12+end.x*horLen, 12+end.y*verLen,horLen-3,verLen-3);
 		if (end != null) g.fillRect(12+start.x*horLen, 12+start.y*verLen,horLen-3,verLen-3);
 		
+		//path taken through maze
 		g.setColor(Color.LIGHT_GRAY);
 		for (Cell c : path) g.fillRect(12+c.x*horLen, 12+c.y*verLen,horLen-3,verLen-3);
-
+		
+		
+		
 	}
 	
 	public void addStep(Cell c) {
@@ -48,6 +52,7 @@ public class Grid extends JPanel {
 	}
 
 	public void addEdge(Edge e) {
+		//add wall
 		if (edges.size() > ((rows+1)*(cols+1)*4)) {
 			System.out.println("Error: Overshot edges!");
 			return;
@@ -56,7 +61,10 @@ public class Grid extends JPanel {
 		//try {Thread.sleep(100);} catch (InterruptedException ex) {}
 		repaint();
 	}
+	
 	public void removeEdge(Cell a, Cell b) {
+		//remove wall between cell a and cell b
+		//convert from cell coordinates to wall index points
 		ArrayList<Edge> toRemove = new ArrayList<Edge>();
 		//a-->b
 		boolean sides = false;
@@ -105,9 +113,13 @@ public class Grid extends JPanel {
 		edges.removeAll(toRemove);
 		repaint();
 	}
+	
 	public void addStartEnd(Cell s, Cell e) {
+		//origin and end point
 		start = s;
 		end = e;
 		repaint();
 	}
+
+	
 }
