@@ -7,7 +7,8 @@ public class Cell {
 	public ArrayList<Cell> neighbours; //physical neighbours
 	public ArrayList<Cell> paths; //accessible next cells
 	public int x,y; //array index
-	public Cell parent; //where the dfs came from
+	public Cell parent; //for generator
+	public Cell ptr; //backpointer for the solver to track solution
 	
 	public Cell(int x,int y) {
 		this.x = x;
@@ -16,5 +17,6 @@ public class Cell {
 		neighbours = new ArrayList<Cell>();
 		paths = new ArrayList<Cell>();
 		parent = null;
+		ptr = null;
 	}
 }
