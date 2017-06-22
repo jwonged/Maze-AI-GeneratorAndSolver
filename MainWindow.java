@@ -16,10 +16,23 @@ public class MainWindow {
 				Grid grid = new Grid(rows,cols);
 				JFrame fr = new JFrame("The Maze");
 				
-				fr.setSize(1100,1100);
+				fr.setSize(960,1020);
 				fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				fr.add(grid);
 				fr.setVisible(true);
+
+				//generate maze
+				Maze maze = new Maze(rows,cols);
+				maze.initDual(grid);
+				
+				maze.generateMaze(grid);
+				
+				/*Other maze generation algos:
+				  maze.dfsi(grid,maze.origin,null);
+				  maze.dfsgenerator(grid);*/
+				
+				//Solver.bfs(grid, maze,maze.origin,maze.end);
+				
 			}
 		});
 
