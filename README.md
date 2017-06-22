@@ -1,6 +1,8 @@
 # Maze-AI-GeneratorAndSolver
 
-Maze Generator using graph-based techniques:<br>
+Maze Generator - experimenting with various graph-based techniques<br><br>
+
+Sample using randomized backtracking:
 <img src="https://user-images.githubusercontent.com/16327547/27396177-305a7bce-56aa-11e7-8af0-548af450c071.JPG" width="300"><br>
 Start and End point marked with green<br><br>
 
