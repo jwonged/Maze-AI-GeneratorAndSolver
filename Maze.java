@@ -77,6 +77,33 @@ public class Maze {
 		}
 	}
 	
+	public void generateMaze(Grid grid) {
+		helper(maze.get(0).get(0),grid,null);
+		System.out.print("End: "+end.x+","+end.y);
+		grid.addStartEnd(origin,end);
+		
+	}
+	
+	private void helper(Cell current, Grid grid, Cell parent) {
+		if (current.y == this.y-1) end = current;
+		if (current.visited || current == null) return;
+
+		Random rand = new Random();
+		current.visited = true;
+		if (parent != null) grid.removeEdge(current,parent); 
+		
+		Cell n;
+		while(!current.neighbours.isEmpty()) {
+			int randNum = rand.nextInt(current.neighbours.size());
+
+			n = current.neighbours.remove(randNum);
+			
+			current.paths.add(n);
+			helper(n,grid, current);
+			
+		}
+	}
+	
 	public void dfsgenerator(Grid grid) {
 		//dfs maze
 		Stack<Cell> stack = new Stack<Cell>();
@@ -116,33 +143,6 @@ public class Maze {
 		}
 		
 		
-	}
-	
-	public void generateMaze(Grid grid) {
-		helper(maze.get(0).get(0),grid,null);
-		System.out.print("End: "+end.x+","+end.y);
-		grid.addStartEnd(origin,end);
-		
-	}
-	
-	private void helper(Cell current, Grid grid, Cell parent) {
-		if (current.y == this.y-1) end = current;
-		if (current.visited || current == null) return;
-
-		Random rand = new Random();
-		current.visited = true;
-		if (parent != null) grid.removeEdge(current,parent); 
-		
-		Cell n;
-		while(!current.neighbours.isEmpty()) {
-			int randNum = rand.nextInt(current.neighbours.size());
-
-			n = current.neighbours.remove(randNum);
-			
-			current.paths.add(n);
-			helper(n,grid, current);
-			
-		}
 	}
 	
 	public void backTrackmaze(Grid grid) {
